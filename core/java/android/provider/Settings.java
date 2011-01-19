@@ -1838,6 +1838,12 @@ public final class Settings {
         public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
 
         /**
+         * Battery percentage toggle for Oxygen.
+         * @hide
+         */
+        public static final String BATTERY_PERCENTAGE = "battery_percentage";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          * @hide
