@@ -116,7 +116,8 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
     // top bar
     TextView mNoNotificationsTitle;
     TextView mClearButton;
-    CmBatteryMiniIcon mCmBatteryMiniIcon;
+    ViewGroup mClearButtonParent;
+    TextView mCompactClearButton;
     // drag bar
     CloseDragHandle mCloseView;
     // ongoing
@@ -143,6 +144,9 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
 
     // the power widget
     PowerWidget mPowerWidget;
+
+    //Carrier label stuff
+    LinearLayout mCarrierLabelLayout;
 
     // ticker
     private Ticker mTicker;
@@ -291,6 +295,7 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
         mNoNotificationsTitle = (TextView)expanded.findViewById(R.id.noNotificationsTitle);
         mClearButton = (TextView)expanded.findViewById(R.id.clear_all_button);
         mClearButton.setOnClickListener(mClearButtonListener);
+        mClearButtonParent = (ViewGroup)mClearButton.getParent();
         mScrollView = (ScrollView)expanded.findViewById(R.id.scroll);
         mNotificationLinearLayout = expanded.findViewById(R.id.notificationLinearLayout);
 
@@ -314,6 +319,8 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
                        return true;
                    }
                });
+
+        mCarrierLabelLayout = (LinearLayout)expanded.findViewById(R.id.carrier_label_layout);
 
         mTicker = new MyTicker(context, sb);
 
@@ -624,6 +631,8 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
         return entry.notification;
     }
 
+    private boolean isClearButtonAdded = false;
+
     private void setAreThereNotifications() {
         boolean ongoing = mOngoing.hasVisibleItems();
         boolean latest = mLatest.hasVisibleItems();
@@ -632,7 +641,7 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
         if (mLatest.hasClearableItems()) {
             mClearButton.setVisibility(View.VISIBLE);
         } else {
-            mClearButton.setVisibility(View.INVISIBLE);
+            mClearButton.setVisibility(View.GONE);
         }
 
         mOngoingTitle.setVisibility(ongoing ? View.VISIBLE : View.GONE);
