@@ -1263,7 +1263,10 @@ status_t OMXCodec::setupAVCEncoderParameters(const sp<MetaData>& meta) {
     defaultProfileLevel.mProfile = h264type.eProfile;
     defaultProfileLevel.mLevel = h264type.eLevel;
     err = getVideoProfileLevel(meta, defaultProfileLevel, profileLevel);
-    if (err != OK) return err;
+    if (err != OK) {
+        CHECK_EQ(setupBitRate(bitRate), OK);
+        return OK;
+    }
     h264type.eProfile = static_cast<OMX_VIDEO_AVCPROFILETYPE>(profileLevel.mProfile);
     h264type.eLevel = static_cast<OMX_VIDEO_AVCLEVELTYPE>(profileLevel.mLevel);
 

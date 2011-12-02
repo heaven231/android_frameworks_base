@@ -149,8 +149,12 @@ CameraSource::CameraSource(const sp<Camera> &camera)
     }
 
     const char *colorFormatStr = params.get(CameraParameters::KEY_VIDEO_FRAME_FORMAT);
-    CHECK(colorFormatStr != NULL);
-    int32_t colorFormat = getColorFormat(colorFormatStr);
+//    CHECK(colorFormatStr != NULL);
+    int32_t colorFormat;
+    if (colorFormatStr)
+        colorFormat = getColorFormat(colorFormatStr);
+    else
+        colorFormat = OMX_COLOR_FormatYUV420SemiPlanar;
 
     // XXX: query camera for the stride and slice height
     // when the capability becomes available.

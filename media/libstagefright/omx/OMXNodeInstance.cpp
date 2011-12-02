@@ -296,7 +296,7 @@ status_t OMXNodeInstance::allocateBuffer(
         return UNKNOWN_ERROR;
     }
 
-    CHECK_EQ(header->pAppPrivate, buffer_meta);
+    header->pAppPrivate = buffer_meta;
 
     *buffer = header;
     *buffer_data = header->pBuffer;
@@ -329,7 +329,7 @@ status_t OMXNodeInstance::allocateBufferWithBackup(
         return UNKNOWN_ERROR;
     }
 
-    CHECK_EQ(header->pAppPrivate, buffer_meta);
+    header->pAppPrivate = buffer_meta;
 
     *buffer = header;
 
